@@ -2,5 +2,7 @@
 .pytest_cache
 .venv
 __pycache__
-static/*
+/static
 wiki/GENERIC/generic/wiki/GENERIC/generic/build
+*.pyc
+*.ipynb
