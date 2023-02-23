@@ -1,10 +1,9 @@
 from typing import Any
 
+from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.models import User
 from django.db.models import QuerySet
-from django.shortcuts import get_object_or_404, render
-from django.urls import reverse_lazy
+from django.shortcuts import get_object_or_404
 from django.views.generic import CreateView, DetailView, ListView
 
 from .models import Post
@@ -27,7 +26,7 @@ class UserPostListView(ListView):
         query = Post.objects.order_by("-date_created")
 
         if username:
-            user = get_object_or_404(User, username=self.kwargs.get("username"))
+            user = get_object_or_404(get_user_model(), username=self.kwargs.get("username"))
             query = query.filter(author=user)
 
         return query
@@ -36,26 +35,6 @@ class UserPostListView(ListView):
         context = super().get_context_data(**kwargs)
         context["username"] = self.kwargs.get("username")
         return context
-
-
-"""
-# Realisation with get_context_data
-class UserPostListView(ListView):
-    model = Post
-    template_name = "blog/user_posts.html"
-
-    # This is necessary as get_context_data uses default get_queryset which fetches all records from the table
-    def get_queryset(self) -> QuerySet[Any]:
-        return Post.objects.none()
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        user = get_object_or_404(User, username=self.kwargs.get("username"))
-        query = Post.objects.filter(author=user).order_by("-date_created")
-        context["username"] = self.kwargs.get("username")
-        context["blog_post_user_list"] = query
-        return context
-"""
 
 
 class PostCreateView(LoginRequiredMixin, CreateView):

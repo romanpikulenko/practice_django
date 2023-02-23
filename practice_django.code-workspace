@@ -6,6 +6,18 @@
 	],
 	"settings": {
 		"python.defaultInterpreterPath": "C:\\Users\\pikulenkor\\Documents\\python\\django\\practice_django\\.venv\\Scripts\\python.exe",
+		"python.linting.enabled": true,
+		// "python.linting.flake8Enabled": true,
+		"python.linting.pylintEnabled": true,
+		//"python.linting.prospectorEnabled": true,
+		"python.linting.pylintArgs": [
+			"--disable=C0114,C0115,C0116",
+			"--disable=django-not-configured",
+			"--load-plugins",
+			"pylint_django",
+			"--django-settings-module=practice_django.settings"
+		],
+		"python.linting.lintOnSave": true,
 		"python.languageServer": "Pylance",
 		"python.analysis.autoImportCompletions": true,
 		"python.analysis.typeCheckingMode": "basic",
