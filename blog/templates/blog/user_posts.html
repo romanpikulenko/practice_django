@@ -1,0 +1,40 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}
+{{username}}'s posts
+{% endblock title %}
+
+{% block content_blog %}
+
+{% comment %}
+<!-- It also can be done with {% empty %} statement in the for -->
+{% if not blog_post_user_list %}
+<h2>User {{username}} has no posts</h2>
+{% endif %}
+{% endcomment %}
+
+<div class="row">
+    <div class="col-lg-10 col-xl-8 offset-lg-1 offset-x1-2">
+        {% for post in blog_post_user_list %}
+        <div class="intro">
+            <h1 class="text-center" data-bss-hover-animate="pulse">&nbsp;
+                {{post.title}}
+            </h1>
+            <p class="text-center">
+                <span class="by">by</span>
+                <a href="#">{{post.author}}</a>
+                <span class="date">{{post.date_created}}</span>
+            </p>
+        </div>
+        <div class="text">
+            <p>
+                {{post.content|safe}}
+            </p>
+            <figure class="figure d-block"></figure>
+        </div>
+        {% empty %}
+        <h2>User {{username}} has no posts</h2>
+        {% endfor %}
+    </div>
+</div>
+{% endblock content_blog %}

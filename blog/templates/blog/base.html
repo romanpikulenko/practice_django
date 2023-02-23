@@ -1,0 +1,13 @@
+<!-- base html for blog -->
+{% extends 'templates_projects/base.html' %}
+
+{% block content %}
+
+<section class="article-clean">
+    <div class="container">
+        {% block content_blog %}
+        {% endblock content_blog %}
+    </div>
+</section>
+
+{% endblock content %}

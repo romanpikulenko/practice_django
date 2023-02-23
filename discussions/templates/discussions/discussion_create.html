@@ -1,0 +1,19 @@
+<!--templates/discussions/create_form.html-->
+
+{% extends "blog/base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block content_blog %}
+
+
+<h2>What's your topic?</h2>
+
+<form action="" method="post">
+    {{form.media}}
+    {{form|crispy}}
+    {% csrf_token%}
+    <input type='submit' value="Save">
+</form>
+
+{% endblock%}
