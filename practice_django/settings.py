@@ -81,7 +81,6 @@ INSTALLED_APPS = [
     "django_extensions",
     # Our apps
     "blog.apps.BlogConfig",
-    "discussions",
     # End our apps
     # https://pypi.org/project/django-cleanup/
     # Note: Order of INSTALLED_APPS is important. To ensure that exceptions inside other apps’ signal handlers
