@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 import os
-from email import message
 from pathlib import Path
 
 from django.contrib.messages import constants as messages
