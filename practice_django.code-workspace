@@ -15,7 +15,8 @@
 			"--disable=django-not-configured",
 			"--load-plugins",
 			"pylint_django",
-			"--django-settings-module=practice_django.settings"
+			"--django-settings-module=practice_django.settings",
+			"--max-line-length=120"
 		],
 		"python.linting.lintOnSave": true,
 		"python.languageServer": "Pylance",

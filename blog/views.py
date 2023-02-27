@@ -3,10 +3,16 @@ from typing import Any
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import QuerySet
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, render
 from django.views.generic import CreateView, DetailView, ListView
 
 from .models import Post
+
+
+def index(request):
+    context = {"posts": Post.objects.all()}
+
+    return render(request, "blog/index.html", context)
 
 
 # Create your views here.

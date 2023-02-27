@@ -223,6 +223,15 @@ CRISPY_TEMPLATE_PACK = "bootstrap4"
 
 # End crispy-forms
 
+# https://docs.djangoproject.com/en/4.1/ref/settings/
+# The URL or named URL pattern where requests are redirected after login
+# when the LoginView doesn’t get a next GET parameter.
+LOGIN_REDIRECT_URL = "blog-home"
+
+# The URL or named URL pattern where requests are redirected for login when using the login_required() decorator,
+# LoginRequiredMixin, or AccessMixin.
+LOGIN_URL = "account-login"
+
 # ckeditor
 # https://django-ckeditor.readthedocs.io/en/latest/#installation
 
