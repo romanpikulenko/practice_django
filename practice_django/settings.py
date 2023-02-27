@@ -83,6 +83,7 @@ INSTALLED_APPS = [
     "blog.apps.BlogConfig",
     "discussions",
     "forms_app",
+    "model_form",
     # End our apps
     # https://pypi.org/project/django-cleanup/
     # Note: Order of INSTALLED_APPS is important. To ensure that exceptions inside other apps’ signal handlers
