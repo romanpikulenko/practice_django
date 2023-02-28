@@ -6,37 +6,59 @@
 
 {% block content_blog %}
 
-{% comment %}
-<!-- It also can be done with {% empty %} statement in the for -->
+{# It also can be done with {% empty %} statement in the for #}
 {% if not blog_post_user_list %}
 <h2>User {{username}} has no posts</h2>
+{% else %}
+<h2>Found {{page_obj.paginator.count}} posts by {{username}}</h2>
 {% endif %}
-{% endcomment %}
 
 <div class="row">
-    <div class="col-lg-10 col-xl-8 offset-lg-1 offset-x1-2">
-        {% for post in blog_post_user_list %}
-        <div class="intro">
-            <h3 class="text-center" data-bss-hover-animate="pulse">&nbsp;
-                <a href="{% url 'post-detail' post.id %}">
-                    {{post.title}}
-                </a>
-            </h3>
-            <p class="text-center">
-                <span class="by">by</span>
-                <a href="#">{{post.author}}</a>
-                <span class="date">{{post.date_created}}</span>
-            </p>
-        </div>
-        <div class="text">
-            <p>
-                {{post.content|safe}}
-            </p>
-            <figure class="figure d-block"></figure>
-        </div>
-        {% empty %}
-        <h2>User {{username}} has no posts</h2>
-        {% endfor %}
+  <div class="col-lg-10 col-xl-8 offset-lg-1 offset-x1-2">
+    {% for post in blog_post_user_list %}
+    <div class="intro">
+      <h3 class="text-center" data-bss-hover-animate="pulse">&nbsp;
+        <a href="{% url 'post-detail' post.id %}">
+          {{post.title}}
+        </a>
+      </h3>
+      <p class="text-center">
+        <span class="by">by</span>
+        <a href="#">{{post.author}}</a>
+        <span class="date">{{post.date_created}}</span>
+      </p>
     </div>
+    <div class="text">
+      <p>
+        {{post.content|safe}}
+      </p>
+      <figure class="figure d-block"></figure>
+    </div>
+    {% empty %}
+    <h2>User {{username}} has no posts</h2>
+    {% endfor %}
+  </div>
 </div>
-{% endblock content_blog %}
+{% if is_paginated %}
+
+{% if page_obj.has_previous %}
+<a class="btn btn-outline-info mb-4" href="?page=1">&lt;</a>
+<a class="btn btn-outline-info mb-4" href="?page={{page_obj.previous_page_number}}">&lt;&lt;</a>
+{% endif %}
+
+{% for num in page_obj.paginator.page_range %}
+{% if page_obj.number == num %}
+<a class="btn btn-info mb-4" href="?page={{num}}">{{num}}</a>
+{% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %} <a class="btn btn-outline-info mb-4"
+  href="?page={{num}}">{{num}}</a>
+  {% endif %}
+  {% endfor %}
+
+  {% if page_obj.has_next %}
+  <a class="btn btn-outline-info mb-4" href="?page={{page_obj.next_page_number}}">&gt;</a>
+  <a class="btn btn-outline-info mb-4" href="?page={{page_obj.paginator.num_pages}}">&gt;&gt;</a>
+  {% endif %}
+
+  {% endif %}
+
+  {% endblock content_blog %}

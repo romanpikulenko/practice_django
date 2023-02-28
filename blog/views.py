@@ -22,6 +22,9 @@ class UserPostListView(ListView):
     # Model
     model = Post
 
+    # https://docs.djangoproject.com/en/4.1/topics/pagination/
+    paginate_by = 5
+
     # Template name
     template_name = "blog/user_posts.html"
 
