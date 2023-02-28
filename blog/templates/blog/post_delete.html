@@ -1,0 +1,25 @@
+<!--blog/templates/blog/delete_post.html-->
+
+{% extends "blog/base.html" %}
+
+{% block title%}Post{%endblock%}
+
+{% block content_blog %}
+
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <br> <br>
+      <p class="text-center">
+      <form action="" method="POST">
+        {% csrf_token %}
+        <h3>Delete post</h3><br>
+        <h4>Do you want to delete "{{object.title}}?" It can't be canceled</h4>
+        <button class="btn btn-primary" type="submit">Yes</button>
+        <a class="btn btn-success" href="{% url 'post-detail' object.id %}">No</a>
+      </form>
+      </p>
+    </div>
+  </div>
+</div>
+{% endblock%}

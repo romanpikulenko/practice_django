@@ -1,10 +1,11 @@
 from typing import Any
 
 from django.contrib.auth import get_user_model
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.db.models import QuerySet
 from django.shortcuts import get_object_or_404, render
-from django.views.generic import CreateView, DetailView, ListView
+from django.urls import reverse_lazy
+from django.views.generic import CreateView, DeleteView, DetailView, ListView
 
 from .models import Post
 
@@ -61,3 +62,23 @@ class PostCreateView(LoginRequiredMixin, CreateView):
 class PostDetailView(DetailView):
     model = Post
     context_object_name = "blog_post_detail"
+
+
+# https://docs.djangoproject.com/en/4.1/topics/auth/default/
+# LoginRequiredMixin
+# When using class-based views, you can achieve the same behavior as with login_required by using the LoginRequiredMixin.
+# This mixin should be at the leftmost position in the inheritance list.
+# UserPassesTestMixin
+# When using class-based views, you can use the UserPassesTestMixin to do this.
+
+
+class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = Post
+    success_url = "/"
+    template_name = "blog/post_delete.html"
+
+    def test_func(self):
+
+        post: Post = self.get_object()  # type: ignore
+
+        return self.request.user == post.author
