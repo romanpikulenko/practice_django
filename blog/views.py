@@ -5,7 +5,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.db.models import QuerySet
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, DeleteView, DetailView, ListView
+from django.views.generic import CreateView, DeleteView, DetailView, ListView, UpdateView
 
 from .models import Post
 
@@ -66,16 +66,32 @@ class PostDetailView(DetailView):
 
 # https://docs.djangoproject.com/en/4.1/topics/auth/default/
 # LoginRequiredMixin
-# When using class-based views, you can achieve the same behavior as with login_required by using the LoginRequiredMixin.
+# When using class-based views, you can achieve the same behavior as with login_required by using the LoginRequiredMixin
 # This mixin should be at the leftmost position in the inheritance list.
 # UserPassesTestMixin
 # When using class-based views, you can use the UserPassesTestMixin to do this.
 
-
+# https://docs.djangoproject.com/en/4.0/ref/class-based-views/generic-editing/#django.views.generic.edit.DeleteView
 class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Post
     success_url = "/"
     template_name = "blog/post_delete.html"
+
+    def test_func(self):
+
+        post: Post = self.get_object()  # type: ignore
+
+        return self.request.user == post.author
+
+
+# https://docs.djangoproject.com/en/4.0/ref/class-based-views/generic-editing/#updateview
+class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = Post
+    fields = ["title", "content"]
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
 
     def test_func(self):
 

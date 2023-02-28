@@ -18,7 +18,9 @@
         {% for post in blog_post_user_list %}
         <div class="intro">
             <h1 class="text-center" data-bss-hover-animate="pulse">&nbsp;
-                {{post.title}}
+                <a href="{% url 'post-detail' post.id %}">
+                    {{post.title}}
+                </a>
             </h1>
             <p class="text-center">
                 <span class="by">by</span>
