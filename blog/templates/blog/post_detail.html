@@ -10,17 +10,17 @@
 
     <div class="intro">
       <h1 class="text-center" data-bss-hover-animate="pulse">&nbsp;
-        {{blog_post_detail.title}}
+        {{post.title}}
       </h1>
       <p class="text-center">
 
-        {% if blog_post_detail.author == user %}
-        <a href="{% url 'post-delete' blog_post_detail.id %}">Delete post |</a>
-        <a href="{% url 'post-update' blog_post_detail.id %}">Update post |</a>
+        {% if post.author == user %}
+        <a href="{% url 'post-delete' post.id %}">Delete post |</a>
+        <a href="{% url 'post-update' post.id %}">Update post |</a>
         {% endif %}
-        <span class="by">by</span> <a href="#">{{blog_post_detail.author}}</a>&nbsp;&nbsp;<span
-          class="date">{{blog_post_detail.date_created|date:"F d Y"}} </span>
-        {{blog_post_detail.content|safe }}
+        <span class="by">by</span> <a href="#">{{post.author}}</a>&nbsp;&nbsp;<span
+          class="date">{{post.date_created|date:"F d Y"}} </span>
+        {{post.content|safe }}
       </p>
     </div>
 

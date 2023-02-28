@@ -17,11 +17,11 @@
     <div class="col-lg-10 col-xl-8 offset-lg-1 offset-x1-2">
         {% for post in blog_post_user_list %}
         <div class="intro">
-            <h1 class="text-center" data-bss-hover-animate="pulse">&nbsp;
+            <h3 class="text-center" data-bss-hover-animate="pulse">&nbsp;
                 <a href="{% url 'post-detail' post.id %}">
                     {{post.title}}
                 </a>
-            </h1>
+            </h3>
             <p class="text-center">
                 <span class="by">by</span>
                 <a href="#">{{post.author}}</a>

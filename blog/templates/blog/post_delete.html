@@ -2,7 +2,7 @@
 
 {% extends "blog/base.html" %}
 
-{% block title%}Post{%endblock%}
+{% block title%}Delete post{%endblock%}
 
 {% block content_blog %}
 
@@ -13,7 +13,6 @@
       <p class="text-center">
       <form action="" method="POST">
         {% csrf_token %}
-        <h3>Delete post</h3><br>
         <h4>Do you want to delete "{{object.title}}?" It can't be canceled</h4>
         <button class="btn btn-primary" type="submit">Yes</button>
         <a class="btn btn-success" href="{% url 'post-detail' object.id %}">No</a>
