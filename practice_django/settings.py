@@ -230,7 +230,7 @@ LOGIN_REDIRECT_URL = "blog-home"
 
 # The URL or named URL pattern where requests are redirected for login when using the login_required() decorator,
 # LoginRequiredMixin, or AccessMixin.
-LOGIN_URL = "account-login"
+LOGIN_URL = "account_login"
 
 # ckeditor
 # https://django-ckeditor.readthedocs.io/en/latest/#installation
