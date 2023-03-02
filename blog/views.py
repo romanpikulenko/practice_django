@@ -74,8 +74,8 @@ def post_detail_view(request, pk):
     handle_page = get_object_or_404(Post, id=pk)
     # example  blog_views_PostDetailView.ipynb
     # https://docs.djangoproject.com/en/4.1/ref/models/querysets/#filter
-    total_comments = handle_page.comments_blog.all().filter(parent_comment=None).order_by("-id")
-    total_comments2 = handle_page.comments_blog.all().order_by("-id")
+    total_comments = handle_page.comments_blog.all().filter(parent_comment=None).order_by("-id")  # type: ignore
+    total_comments2 = handle_page.comments_blog.all().order_by("-id")  # type: ignore
     total_likes = handle_page.total_likes_posts()
     total_saves = handle_page.total_saves_posts()
 

@@ -12,53 +12,60 @@
 {% else %}
 <h2>Found {{page_obj.paginator.count}} posts by {{username}}</h2>
 {% endif %}
-
 <div class="row">
-  <div class="col-lg-10 col-xl-8 offset-lg-1 offset-x1-2">
+  <div class="col-lg-10 col-xl-8 offset-lg-1 offset-xl-2">
+
     {% for post in blog_post_user_list %}
     <div class="intro">
-      <h3 class="text-center" data-bss-hover-animate="pulse">&nbsp;
-        <a href="{% url 'post-detail' post.id %}">
-          {{post.title}}
-        </a>
-      </h3>
+      <h1 class="text-center" data-bss-hover-animate="pulse">&nbsp;
+
+        {#{{post.title}}#}
+        <h3><a href="{% url 'post-detail' post.id %}">{{post.title}}</a></h3>
+
+      </h1>
       <p class="text-center">
-        <span class="by">by</span>
-        <a href="#">{{post.author}}</a>
-        <span class="date">{{post.date_created}}</span>
+        <span class="by">by</span> <a href="#">{{post.author}}</a>&nbsp;&nbsp;<span
+          class="date">{{post.date_created|date:"F d Y"}} </span>
+      <div class="post-content">
+        {# https://docs.djangoproject.com/en/4.1/ref/templates/builtins/#truncatewords #}
+        {{post.content|safe|linebreaks|truncatewords_html:20}}
+
+        <a class="link-primary card-link" href="{% url 'post-detail' post.id %}">[read completely]</a>
+      </div>
       </p>
     </div>
+    {% endfor %}
+
+
     <div class="text">
       <p>
-        {{post.content|safe}}
       </p>
       <figure class="figure d-block"></figure>
     </div>
-    {% empty %}
-    <h2>User {{username}} has no posts</h2>
-    {% endfor %}
+
+    {% if is_paginated %}
+
+    {% if page_obj.has_previous %}
+    <a class="btn btn-outline-info mb-4" href="?page=1">&lt;&lt;</a>
+    <a class="btn btn-outline-info mb-4" href="?page={{page_obj.previous_page_number}}">&lt;</a>
+    {% endif %}
+
+    {% for num in page_obj.paginator.page_range %}
+    {% if page_obj.number == num %}
+    <a class="btn btn-info mb-4" href="?page={{num}}">{{num}}</a>
+    {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %} <a class="btn btn-outline-info mb-4"
+      href="?page={{num}}">{{num}}</a>
+      {% endif %}
+      {% endfor %}
+
+      {% if page_obj.has_next %}
+      <a class="btn btn-outline-info mb-4" href="?page={{page_obj.next_page_number}}">&gt;</a>
+      <a class="btn btn-outline-info mb-4" href="?page={{page_obj.paginator.num_pages}}">&gt;&gt;</a>
+      {% endif %}
+
+      {% endif %}
+
   </div>
 </div>
-{% if is_paginated %}
 
-{% if page_obj.has_previous %}
-<a class="btn btn-outline-info mb-4" href="?page=1">&lt;</a>
-<a class="btn btn-outline-info mb-4" href="?page={{page_obj.previous_page_number}}">&lt;&lt;</a>
-{% endif %}
-
-{% for num in page_obj.paginator.page_range %}
-{% if page_obj.number == num %}
-<a class="btn btn-info mb-4" href="?page={{num}}">{{num}}</a>
-{% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %} <a class="btn btn-outline-info mb-4"
-  href="?page={{num}}">{{num}}</a>
-  {% endif %}
-  {% endfor %}
-
-  {% if page_obj.has_next %}
-  <a class="btn btn-outline-info mb-4" href="?page={{page_obj.next_page_number}}">&gt;</a>
-  <a class="btn btn-outline-info mb-4" href="?page={{page_obj.paginator.num_pages}}">&gt;&gt;</a>
-  {% endif %}
-
-  {% endif %}
-
-  {% endblock content_blog %}
+{% endblock content_blog %}
